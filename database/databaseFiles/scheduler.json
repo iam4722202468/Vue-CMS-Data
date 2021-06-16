@@ -1,0 +1,219 @@
+{
+  "pageId":"3",
+  "title":"Guelph Scheduler 2",
+  "desc":"A scheduler for the University of Guelph",
+  "tags":[
+    "Python",
+    "Nginx",
+    "Git",
+    "Express",
+    "Bootstrap",
+    "C++",
+    "Supported",
+    "Popular",
+    "Node.js",
+    "Sass",
+    "Javascript",
+    "Github",
+    "JQuery",
+    "MongoDB",
+    "Yarn",
+    "Webpack",
+    "Babel"
+  ],
+  "masthead": {
+    "image": "scheduler/masthead_blur.png",
+    "text-color": "#000000",
+    "background-color": "#0000ff"
+  },
+  "links":[
+    {
+      "text":"Live",
+      "url":"https://guelph.scheduler.online"
+    }
+  ],
+  "page":[
+    {
+      "title":"Gallery",
+      "body":[
+        [
+          {
+            "type":"carousel",
+            "contents":[
+              {
+                  "src":"scheduler/Screenshot_2019-08-18_13-28-30.png",
+                  "text":"Choose between schedules using the thumbnails on the left, and the arrows."
+              },
+              {
+                  "src":"scheduler/Screenshot_2019-08-18_14-21-56.png",
+                  "text":"Search by courses by name or course code to add classes."
+              },
+              {
+                  "src":"scheduler/Screenshot_2019-08-18_13-28-57.png",
+                  "text":"Press the magnifying glass icon next to a course name to see its information."
+              },
+              {
+                  "src":"scheduler/Screenshot_2019-08-18_13-28-38.png",
+                  "text":"Sort schedules based on criteria that you want."
+              },
+              {
+                  "src":"scheduler/Screenshot_2019-08-18_13-28-44.png",
+                  "text":"Add time blocks to make sure classes aren't when you don't want them."
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type":"divider"
+          }
+        ]
+      ]
+    },
+    {
+      "title":"What is this?",
+      "body":[
+        [
+          {
+            "type":"text",
+            "text":"This is a schedule maker for the University of Guelph. It scrapes information from webadvisor, and then generates schedules without conflicts. It also allows the user to tailor the schedule to their needs. For example, the user can choose to prefer courses at night over courses in the morning, and the scheduler will show schedules with late course sections first."
+          }
+        ]
+      ]
+    },
+    {
+      "title":"Features",
+      "body":[
+        [
+          {
+            "type":"feature",
+            "title":"Schedule Creation",
+            "text":"Classes can be added to the schedule by searching for them by name or code in the top bar."
+          }
+        ],
+        [
+          {
+            "type":"feature",
+            "title":"Schedule ranking",
+            "text":"Criteria can be chosen by the user to optimize their schedule.",
+            "formatted":"Criteria include:<br>&nbsp;&nbsp;- Time Between Classes<br>&nbsp;&nbsp;- Average Class Time<br>&nbsp;&nbsp;- Class Length<br>&nbsp;&nbsp;- Average Professor Rating"
+          }
+        ],
+        [
+          {
+            "type":"feature",
+            "title":"Class information",
+            "text":"Information about a class can be found after it is added, by pressing the magnifying glass icon next to the course name. The course description will be displayed, along with other information such as the amount of credits it gives, the professor teaching it, and the current section enrollment."
+          }
+        ]
+      ]
+    },
+    {
+      "title":"How it works",
+      "body":[
+        [
+          {
+            "type":"formatted-text",
+            "text":"<h5>Web Server</h5>"
+          }
+        ],
+        [
+          {
+            "type":"text",
+            "text":"The backend server is written in nodejs. It sends a static html page to the client, and from that page other requests are sent to load information. This information includes the user's selected classes, blocked times, and current course criteria."
+          }
+        ],
+        [
+          {
+            "type":"divider"
+          }
+        ],
+        [
+          {
+            "type":"formatted-text",
+            "text":"<h5>Session storing</h5>"
+          }
+        ],
+        [
+          {
+            "type":"text",
+            "text":"Sessions are stored by saving a cookie on the client side, and pairing that cookie with server side information. Each request to the server contains this client cookie, to identify the client. The cookie is only created when a user first adds a course, meaning if they just go to the page without adding anything they will not have a session created. On the server each client ID is the key for an array of course codes, which represents the courses that the user has on their schedule."
+          }
+        ],
+        [
+          {
+            "type":"divider"
+          }
+        ],
+        [
+          {
+            "type":"formatted-text",
+            "text":"<h5>Information scraping</h5>"
+          }
+        ],
+        [
+          {
+            "type":"text",
+            "text":"The information is scraped using python. I reverse engineered the site my school uses for course selection and wrote a python api to get course information such as the description, and open sections. Every time a user adds a new course the scraper is called and information is updated."
+          }
+        ],
+        [
+          {
+            "type":"divider"
+          }
+        ],
+        [
+          {
+            "type":"formatted-text",
+            "text":"<h5>Database</h5>"
+          }
+        ],
+        [
+          {
+            "type":"text",
+            "text":"This program uses a mongodb database to store user information and cached course data. All course codes, names and descriptions are stored in one collection. This information is static and only changed when a script to get all course information is run. Section data on courses are stored in another collection, and this information is updated on a per course basis when users add the course. A third collection is used to pair user session IDs with the array of classes they have. Two more collections are used to store blocked times, and criteria preferences of each user."
+          }
+        ],
+        [
+          {
+            "type":"divider"
+          }
+        ],
+        [
+          {
+            "type":"formatted-text",
+            "text":"<h5>Schedule Generation</h5>"
+          }
+        ],
+        [
+          {
+            "type":"text",
+            "text":"A C++ program is run after a course is added, or when the user loads the page. It takes the user session ID, and the range of courses to output as arguments. It returns a JSON object with the schedules from between the specified range. The algorithm uses one course as a base. It goes through every section of that course, recursively trying every section of the next course with it. It ignores the branches with overlaps, and continues down the branches which work. Once all courses have been added and there are no overlaps found, that working schedule is added to an array of working schedules."
+          }
+        ],
+        [
+          {
+            "type":"text",
+            "text":"Next, averages for all courses for each criteria is found. For example, when looking for average start time, all start times are added together, then divided by the number of courses added. This average gives a basis point for all other schedules. Based on how close to this point other schedules are, scores can be calculated for each schedule. These scores are then weighted and used to find which schedules fit the users criteria the best."
+          }
+        ],
+        [
+          {
+            "type":"divider"
+          }
+        ]
+      ]
+    },
+    {
+      "title":"Achievements",
+      "body":[
+        [
+          {
+            "type":"text",
+            "text":"This is by far the most popular program I have ever written, with over 1700 users at the peak when course selection is open. Many people have told me how much time this program has saved them, and much faster and easier it is to look up courses using this compared to my school's actual site."
+          }
+        ]
+      ]
+    }
+  ]
+}

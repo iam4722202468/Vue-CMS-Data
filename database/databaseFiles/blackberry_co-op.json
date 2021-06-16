@@ -1,0 +1,130 @@
+{
+   "pageId":"blackberry_coop",
+   "title":"Working at Blackberry",
+   "tags":[
+      "Kubernetes",
+      "Scala",
+      "Kafka Streams",
+      "ZIO"
+   ],
+   "masthead": {
+     "text-color": "#000000",
+     "background-color": "#ffffff"
+   },
+   "page":[
+      {
+         "title":"Abstract/Introduction",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Starting July 2020, I completed a 3 month long co-op workterm at Blackberry. In my position as a member of the Security Research Team I learned a ton about technologies such as Docker, Kubernetes and other software that I can’t talk about. I had a great time working with cool and knowledgeable people."
+               },
+               {
+                  "type":"img",
+                  "src":"/blackberry/Screenshot_2020-09-08_20-24-43.png"
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Information about the Employer",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"BlackBerry provides organizations with software to secure the IoT devices they use, the products they make, the data they share and their communications. Blackberry operates globally in countries such as the Unites States and Canada, with their headquarters being in Waterloo, Ontario."
+               }
+            ]
+         ]
+      },
+      {
+        "title":"Job Description",
+        "body":[
+          [
+            {
+              "type":"text",
+              "text":"At Blackberry I worked with Shay Berkovich. We developed an open source benchmark tool that I am allowed to talk about called Ultimate Benchmark for Container Image Scanning (UBCIS). UBCIS is a benchmark for detecting the scanner performance in terms of precision and vulnerability coverage on most common Linux Docker basic images. UBCIS can evaluate your scanner and score it using statistical notations of precision, recall and f-measure. UBCIS can also run a set of scanners on a set of container images and smartly merge the results without you worrying about the setup."
+            }
+          ]
+        ]
+      },
+      {
+         "title":"Co-op Learning Goals",
+         "body":[
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn how Docker works and why scanners for it are important</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Use Docker scanners to find vulnerabilities with containers."
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Complete a project involving docker vulnerability scanners."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Throughout my co-op I used tools such as Anchore, Clair, Microscanner, Snyk, Trivy and [REDACTED]. Vulnerability scanners are important because docker containers can be build on other containers, some of which use base containers that are rarely updated. Vulnerabilities can be found in base containers that indirectly make your container vulnerable, which some people may not realize. At Blackberry, these scanners were benchmarked and compared to each other. The results from the project I worked on can be seen in the paper on the Github project page!"
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn about cool stuff on Fridays</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Use my Friday learning days to learn about security related topics"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Learn at least one thing security related on a Friday while working at Blackberry"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"At Blackberry, Fridays were used for learning about topics that interest you. On Fridays at Blackberry I learned about buffer overflows, memory management, operating system internals, the boot process, cryptography, and many other subject areas."
+               }
+            ]
+         ]
+      },
+      {
+          "title":"Highlights of Working at Blackberry",
+          "body":[
+            [
+              {
+                "type":"text",
+                "text":"Working from home was really nice."
+              }
+            ]
+          ]
+      },
+      {
+         "title":"Conclusion",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"This was a fun and insightful co-op term. Being able to show people an open source project that I wrote published by Blackberry is pretty cool."
+               }
+            ]
+         ]
+      }
+   ]
+}

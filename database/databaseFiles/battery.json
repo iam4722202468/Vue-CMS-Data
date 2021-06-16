@@ -1,0 +1,291 @@
+{
+   "pageId":"battery",
+   "title":"Open Source Thinkpad T420 Battery",
+   "tags":[
+      "Hardware"
+   ],
+   "masthead": {
+     "image": "battery/pictures/masthead.jpg",
+     "text-color": "#ffffff",
+     "background-color": "#0000ff",
+     "stroke-color": "#000000"
+   },
+   "links":[
+     {
+       "text":"Part 2",
+       "url":"/#/battery2"
+     }
+   ],
+   "page":[
+      {
+         "title":"What is this?",
+         "body":[
+            [
+               {
+                 "type":"container-vert",
+                 "contents": [
+                   {
+                      "type":"text",
+                      "text":"This is a fully open source T420 battery design. It uses an attiny85 microcontroller to reply to the T420’s SMBus requests."
+                   },
+                   {
+                     "type":"formatted-text",
+                     "text":"<a href=\"https://github.com/iam4722202468/ThinkpadBattery\">https://github.com/iam4722202468/ThinkpadBattery</a>"
+                   }
+                 ]
+               },
+               {
+                  "type":"img",
+                  "src":"battery/pictures/Screenshot_2020-08-27_21-44-02.png"
+               }
+            ]
+         ]
+      },
+      {
+        "title":"Why Did I Make This?",
+        "body":[
+          [
+            {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [{
+                  "type":"text",
+                  "text":"My laptop was restarting on its own once every few weeks and I had no idea why. I spent tons of time trying to debug the problem, switching out components and testing individual parts. At the end I decided to get a new motherboard and see if it fixed the problem. I didn’t notice anything for a few weeks and thought the problem was fixed, but then the laptop restarted. At this point I realized the only part I hadn’t swapped out was the battery. The battery I’m using is a third party laptop battery compatible with the T420, not an original Lenovo one, so it most likely had been the problem all along. After looking at authentic Lenovo batteries and seeing how expensive they were, I decided it would be fun and educational to make the battery and controller myself instead of buying one."
+                },
+                {
+                  "type":"text",
+                  "text":"I did some research and found that many people were using original Lenovo battery controllers and replacing the cells, but this was problematic if you wanted to use a non-standard capacity for the battery pack. Reprogramming the authentic controller seemed infeasible, meaning the only option left was to reverse engineer communication between the motherboard and the battery and make my own controller. Luckily, I had a dead authentic battery and a third party battery which I could take apart to borrow the cells from."
+                }
+              ]
+            },
+            {
+              "type":"img",
+              "width":"2",
+              "src":"battery/pictures/IMG_20200421_163117.jpg"
+            }
+          ]
+        ]
+      },
+      {
+         "title":"Getting Started",
+         "body":[
+           [
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"First I started by doing some research in to how the battery communicates with the motherboard. I found that it uses a protocol called SMBus, which is basically just i2c with specific packets used to signify which command is being sent."
+                 }
+              ]
+             },
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery/pictures/IMG_20200512_222948.jpg"
+             }
+           ]
+         ]
+      },
+      {
+        "title":"Creating a Testing Setup",
+        "body":[
+           [
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery/pictures/IMG_20200503_142637.jpg"
+             },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"To make this project easier, I took a working T420 motherboard and soldered wires to where the battery would be connected, and attached those wires to a breadboard. This allowed me to easily connect wires to the motherboard, and made the whole process of testing much faster."
+                 }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title":"Reverse Engineering",
+        "body":[
+           [
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery/pictures/IMG_20200503_142653.jpg"
+             },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"I started reverse engineering the communication between the battery and the motherboard after doing research on how the protocol worked. To capture packets, I used a cheap Saleae logic analyzer clone. It could only sample at 12mhz but this was more than good enough for the slow SMBus communication. I took multiple packet dumps and did things like boot up the computer, shut it down and plug/unplug the charger to make sure that all the packets were found and logged."
+                 },
+                 {
+                   "type":"formatted-text",
+                   "text":"After this I analyzed the data, and made a mapping of requests to replies. When there were differences between the authentic battery and the third party battery, I took the reply packets from the authentic battery. With the help of <a href=\"https://www.ti.com/lit/ug/sluua93b/sluua93b.pdf\">this pdf</a>, I was able to get an idea of the data in each packet."
+                 }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title":"Recreating the Packets",
+        "body":[
+           [
+             {
+              "type":"container-vert",
+              "width":"2",
+              "contents": [
+                {
+                  "type":"img",
+                  "src":"battery/pictures/IMG_20200509_005339.jpg"
+                },
+                {
+                  "type":"img",
+                  "src":"battery/pictures/IMG_20200509_200236.jpg"
+                }
+              ]
+             },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"I used an Arduino Uno to communicate with the motherboard using i2c. I took the packets that were sent by the battery and sent them from the Arduino. It worked! After this I took a look at the packets and saw there was a CRC. I did some research on how the CRC worked, but couldn’t find any information on which bits needed to be inverted for this specific CRC so I bruteforced the 8 bits and found that bits 0 and 1 needed to be inverted when the shift was done. I implemented the CRC algorithm in C and got it working. I removed the last bit of each group of bytes sent to the motherboard and appended on the calculated CRC. After lots of testing and debugging, it worked."
+                 }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title":"Designing the PCB",
+        "body":[
+           [
+             {
+               "type":"text",
+               "text":"I first researched which microcontroller to use for this project. I was looking at a few low power arm processors when I remembered that I had a bunch of attiny85’s not being used for anything, so I went with the attiny85. I put one on a breadboard and programmed it, and everything worked as expected (after debugging the code for a while). I then created a schematic for the design and routed it. This was probably the easiest part of the project."
+            },
+            {
+              "type":"img",
+              "src":"battery/pictures/Screenshot_2020-08-27_22-06-12.png"
+            }
+          ]
+        ]
+      },
+       {
+        "title":"Measuring Remaining Capacity",
+        "body":[
+           [
+             {
+               "type":"text",
+               "text":"Turns out, measuring a battery’s remaining capacity isn’t easy. I decided to just make a simple voltage splitter and read that with a pin on the attiny85. This actually worked better than expected, and is very usable."
+            }
+           ]
+        ]
+      },
+       {
+        "title":"Cleaning up the Code",
+        "body":[
+           [
+             {
+               "type":"text",
+               "text":"The code wasn’t great and nothing was configurable, so I had to spend some time dissecting packets and replacing them with my own code to do things like send a custom vendor name, model number, fully charged capacity, etc. Now all the constants are at the top of the file which is nice."
+            }
+           ]
+        ]
+      },
+      {
+         "title":"Assembling the PCB and Final Tests",
+         "body":[
+           [
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"The components came in less than 24 hours which was pretty cool, but the PCB’s took a few weeks to arrive. I soldered all the components and then programmed the attiny, then attached all the wires and turned it on. The motherboard powered on, and everything worked. I’ve been charging and discharging the battery for the past few hours and there haven’t been any major problems so far. The voltage -> capacity remaining map is going to need some tweaking to get it to say 100% when full and 0% when empty."
+                 }
+              ]
+             },
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery/pictures/IMG_20200827_153147.jpg"
+             }
+           ]
+         ]
+      },
+      {
+        "title":"It Works!",
+        "body":[
+           [
+             {
+               "type":"vid",
+               "src":"battery/pictures/working.mp4"
+            }
+           ]
+        ]
+      },
+      {
+        "title":"Update: Creating the 3d Model",
+        "body":[
+           [
+            {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                {
+                  "type":"text",
+                  "text":"My 3d printer arrived, and since then I’ve been working on the 3d model of the battery. Currently, the connection mechanism has been modelled and seems to work. More work will need to be done to make a mount for the batteries + controller boards, and a spring will need to be added to pull the latching mechanism closed."
+                }
+              ]
+             },
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery/new/768-1024.jpg"
+             }
+           ],
+           [
+            {
+              "type":"container-vert",
+              "width":"2",
+              "contents": [
+                {
+                  "type":"img",
+                  "src":"battery/new/Screenshot_2020-09-02_16-39-19.png"
+                }
+              ]
+             },
+             {
+               "width":"2",
+               "type":"vid",
+               "src":"battery/new/video-1599008739.mp4"
+             }
+           ]
+        ]
+      },
+       {
+        "title":"Future Plans",
+        "body":[
+           [
+             {
+               "type":"text",
+               "text":"When I figure out a cheap way to spot weld batteries, I plan on getting a bunch of Samsung 50e cells and making a 3s3p pack. Then I’ll create a 3d model for the casing, get it printed, and hopefully have a working 150wh battery pack."
+            }
+           ]
+        ]
+      }
+   ]
+}

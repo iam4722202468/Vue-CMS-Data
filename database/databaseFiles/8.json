@@ -1,0 +1,132 @@
+{
+   "pageId":"8",
+   "title":"Monte Carlo Tree",
+   "tags":[
+      "C++"
+   ],
+   "masthead": {
+     "image": "montecarlo/1200px-Binary_tree.png",
+     "text-color": "#ffffff",
+     "background-color": "#ffffff",
+     "stroke-color": "#000000"
+   },
+   "page":[
+      {
+         "title":"What is this?",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"This is a program to find optimal paths given a fitness function, compare function, and filter function. It has been optimized for high memory usage and fast completion time, using dynamic programming approaches such as storing all branch collisions in memory for fast lookup times."
+               }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"For example:"
+              }
+            ],
+            [
+              {
+                "type":"code",
+                "code":"arr1 = {153,622,906,759,562,5  ,243, 91,362,730,253,383,361,423,219,987,747,492,991};\narr2 = {319,752,704,272,755,666,630,137,253,790,806,665,344,890, 58,990,819,554,358,991};\narr3 = {217,289,406,587,375,534,569,133,394,171,363,206,810,743, 15,654,669,437,392, 66};\narr4 = {409,10 ,250,779,280,991,783, 42,655,258,365,595,125,737,159,168,315, 89,717,285};\narr5 = {464,151,776,946,227,203,214,572,336,364, 85,925,728,635,504,588,924, 31,760,935};\narr6 = {295,537,582,395,714, 41, 49,402,508,377, 62,164,300,862,546,426,749,229,112,157};\narr7 = {856,114,260,328,984,460,558,796,501,267,542,990,117,893,591,899,510,805,321,866};\narr8 = {857,115,261,327,983,461,559,797,502,268,543,991,118,894,592,898,511,804,320,867,910,920};"
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"With the functions"
+              }
+            ],
+            [
+              {
+                "type":"code",
+                "code":"// Use greater value\nint comp(int in1, int in2) {\n  return in1-in2;\n}\n\n// Get all values in path and add them up\nint fit(std::vector<std::vector<void*>> *arrs, std::vector<int> currPath, int pathNum) {\n  int acc = 0;\n  for (unsigned int x = 0; x < currPath.size(); ++x) {\n    acc += *(int*)(arrs->at(x)[currPath.at(x)]);\n  }\n  return acc;\n}\n\n// Don't allow a value to be used more than once\nbool filt(void* a, void* b, int aPlace, int bPlace) {\n  if (*(int*)a == *(int*)b)\n    return false;\n  return true;\n}"
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"The optimal solution of 7553 is found in just under 2 seconds on average. It uses the path 15, 15, 12, 5, 3, 13, 4, 4, which adds up the values 987, 990, 810, 991, 946, 862, 984, 983. The number of possible search paths is len(arr1)*len(arr2)*... which is 17,783,343,018 in this case."
+              }
+            ]
+         ]
+      },
+      {
+         "title":"How does it work?",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"This uses a combination of Montecarlo Randomization and genetic algorithms to find an optimal path. Before running, filters are calculated and stored to save time. For example,"
+               },
+               {
+                 "type":"code",
+                 "code":"1, 2, 3\n2, 3, 1\n3, 1, 2"
+               }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"N by M boolean arrays will be generated for each value in the given array. With the filter function from above, the following arrays would be generated:"
+              },
+              {
+                "type":"code",
+                "code":"0,1,1    1,0,1    1,1,0\n1,1,0    0,1,1    1,0,1\n1,0,1    1,1,0    0,1,1\n\n1,0,1    1,1,0    0,1,1\n0,1,1    1,0,1    1,1,0\n1,1,0    0,1,1    1,0,1\n\n1,1,0    0,1,1    1,0,1\n1,0,1    1,1,0    0,1,1\n0,1,1    1,0,1    1,1,0"
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"This strategy uses lots of memory, but makes lookup times constant. A logic AND can be done between these arrays to see which combinations of rows are possible. For example, say we have path 0,1 and want to see which paths can come next."
+              },
+              {
+                "type":"code",
+                "code":"0,0 gives\n  0,1,1\n  1,1,0\n  1,0,1\n\n1,1 gives\n  1,1,0\n  1,0,1\n  0,1,1\n\n0,0 & 1,1 gives\n  0,1,0\n  1,0,0\n  0,0,1"
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"This result means that the only option is to use 2,2 to complete this path. Therefore, a complete path starting with the values 1, 3 could only end with 2."
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"Following the generation of the filter arrays, a working path is found through bruteforce to use as the original parent for all groups. This is done with a depth first search. The working path is used as a parent, and children are created as mutations of this parent. The best child from this is chosen to become a new parent. These steps are then repeated, and eventually converge to an optimal solution"
+              }
+            ]
+         ]
+      },
+      {
+         "title":"Purpose",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"I created this to make my course scheduler project faster at schedule generation. Right now it employs a brute force method to find every schedule, and then sorts them. Doing this results in extremely high memory usage when over 100,000 schedule options exist, because they are all in memory at the same time."
+               }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"This project fixes the high memory usage problem by using constant and deterministic memory usage, meaning that crashing when memory runs out won't happen anymore. This will also reduce wait times for schedule generation when implemented. Currently large schedules can take upwards of 10 seconds to generate. Extrapolating from tests I've done with this method, most schedule generation should be able to be done in under 1 second. Another benefit of doing course selection this way is that there is significantly more control over resources. Specific users can be given more computation time than others, while still being given results."
+              }
+            ]
+         ]
+      },
+      {
+        "title":"What's Next?",
+        "body":[
+          [
+            {
+              "type":"text",
+              "text":"I plan on eventually implementing this in the Guelph Course Scheduler project I have."
+            }
+          ]
+        ]
+        
+      }
+   ]
+}

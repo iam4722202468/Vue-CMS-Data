@@ -1,0 +1,156 @@
+{
+   "pageId":"manulife_coop",
+   "title":"Working at Manulife",
+   "tags":[
+      "Kubernetes",
+      "Scala",
+      "Kafka Streams",
+      "ZIO"
+   ],
+   "masthead": {
+     "text-color": "#000000",
+     "background-color": "#ffffff"
+   },
+   "page":[
+      {
+         "title":"Abstract/Introduction",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Starting January 2020, I completed a 4 month long co-op workterm at Manulife. In my position as a member of the Devops Team I learned a ton about technologies such as Jenkins, Node.js, Docker and Grafana. I had a great time working with cool and knowledgeable people."
+               },
+               {
+                  "type":"img",
+                  "src":"manulife/logo.jpeg"
+               }
+            ],
+            [
+
+            ]
+         ]
+      },
+      {
+         "title":"Information about the Employer",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Manulife is a leading international financial services group that helps people make their decisions easier and lives better. Manulife operates primarily as John Hancock in the United States and Manulife elsewhere."
+               }
+            ]
+         ]
+      },
+      {
+        "title":"Job Description",
+        "body":[
+          [
+            {
+              "type":"text",
+              "text":"At Manulife I worked with Dean and Omar on the Devops team. We developed software to simplify certain tasks, like backing up data and cleaning up old unused data. This helped other teams perform their tasks more easily, and helped to save Manulife money."
+            }
+          ]
+        ]
+      },
+      {
+         "title":"Co-op Learning Goals",
+         "body":[
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn how to use tools used at Manulife such as Jenkins, Sonarqube, Jira, Gitlab</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Continue to use these tools through my co-op"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Have knowledge of these tools, and how to use the APIs to call them"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Throughout my co-op I used all these tools almost daily, and have become accustomed to them. After writing different programs to call API’s for products such as Sonarqube, Jira and Grafana, I have become very comfortable writing code in nodejs to make api calls."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn about pipelines, using Jenkins and Groovy</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Write pipelines in Groovy to compile and run code. Investigate how to use pipelines to post updates to slack on if the pipeline failed or succeeded"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Understand how to create a pipeline, and run it"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"During my time at Manulife, I have made pipeline code to run each of the projects I have worked on in Groovy, which runs in the JVM. Each of my pipelines will produce error messages to Slack when errors happen, using the webhooks provided by Slack. I now have a strong understanding of how to set up jobs in Jenkins, and how to use all kinds of features in Jenkins like setting up credentials, automating jobs and creating folder permissions."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn about other teams and what they do through communicating with them and helping with different tasks</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Work with other teams and learn what they do"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Gain knowledge of what other teams in Manulife do"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"I have gotten to know many co-ops from other teams, and have seen what they do. I’ve done tasks such as proof read posts made to the Manulife website by other co-ops, and have helped plan an event held by Manulife."
+               }
+            ]
+         ]
+      },
+      {
+          "title":"Highlights of Working at Manulife",
+          "body":[
+            []
+          ]
+      },
+      {
+         "title":"Conclusion",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"This co-op was a great experience, and I have learned a lot about programming. During the past 4 months I’ve met cool people who know a lot about programming. This co-op was a great opportunity to develop my skills as a programmer, teaching me about many new technologies and programming paradigms."
+               }
+            ]
+         ]
+      }
+   ]
+}

@@ -1,0 +1,135 @@
+{
+   "pageId":"7",
+   "title":"SFML Lighting Engine",
+   "tags":[
+      "SFML",
+      "GLSL",
+      "C++"
+   ],
+   "masthead": {
+     "image": "lightEngine/thumb_big.png",
+     "text-color": "#ffffff",
+     "background-color": "#0000ff",
+     "stroke-color": "#000000"
+   },
+   "page":[
+      {
+         "title":"What is this?",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"This is a 2d lighting engine I wrote in C++ using SFML and GLSL shaders. After many iterations on this project, it has become very efficient and fast, even on my laptop with Intel HD 4000 graphics."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Version 1",
+         "body":[
+            [
+               {
+                  "type":"img",
+                  "src":"lightEngine/1.png"
+               },
+               {
+                  "type":"text",
+                  "text":"This version used ray casting to draw out where light should be in the image. Rays are drawn to and past all corners of shapes in the image, and also to the corners of the screen. Some problems I encountered with this was not knowing what order to draw the corners in. To solve this, multiple light rays were drawn to each corner, allowing me to calculate where the shape was and where the light was supposed to go. This was done by checking which rays made it past the shape and which rays were stopped by it. This method was inefficient, as four rays were needed for each object. It was also not precise. The further an object was from the light source, the less accurate the lighting was."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Version 2",
+         "body":[
+            [
+               {
+                  "type":"img",
+                  "src":"lightEngine/2.png"
+               },
+               {
+                  "type":"text",
+                  "text":"This version took a very different approach. After the realization that 2d objects always cast quadrilateral shadows, I switched from ray casting to shadow casting. Similarly to before corners of shapes were found, but this time instead of stopping at a corner, rays were stored as pairs where one ray went past the corner and one stopped at it, essentially using two rays per corner instead of 4. These pairs were created for each object's set of corners, and then they were sorted based on angle from the light source. The two outer pairs were used as corners for the shadow quadrilateral. GLSL shaders were used to create a nice lighting effect, although the light blending was not being done correctly here (I realized this after making the next version). Each light had its own texture (mask) which was drawn to. The GLSL shader was drawn to this mask, and then all the masks were combined. This resulted in extremely high memory usage with large amounts of lights because all the masks were stored before combining them, and the masks were the size of the window. Another problem was that this method didn't allow for shapes to have any light drawn on to them."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Version 3",
+         "body":[
+            [
+               {
+                  "type":"img",
+                  "src":"lightEngine/3.png"
+               },
+               {
+                  "type":"text",
+                  "text":"This version aimed to fix the problem of using large amounts of memory, and also allow for shapes to look more photo realistic. The memory problem was solved by a hack which involved creating two buffers, one main buffer for storing everything and one for drawing on temporary light masks. After the light mask was completed it was drawn to the main buffer and cleared for the next light. This reduced memory from linear usage to constant usage, but was still slow because the screen needed to be drawn once for each light. This meant having two lights effectively halved the fps from one light. Although there were problems with this, it allowed for some cool effects. Notably, objects are showing light and psudo-3d effect could be done by drawing to the temporary mask, as seen with the tree."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Version 4",
+         "body":[
+            [
+               {
+                  "type":"img",
+                  "src":"lightEngine/4.png"
+               },
+               {
+                  "type":"text",
+                  "text":"This is the current release version of this lighting engine. It solves all the problems from version 3 and has no major flaws of its own. To achieve much better performance, some functions were made more efficient. One example of this is the function to find the extension from the light source and the corner of objects to the wall."
+               }
+            ],
+            [
+              {
+                "type":"container",
+                "width":1,
+                "style":"border: 1px solid black;",
+                "contents": [
+                  {
+                    "type":"img",
+                    "src":"/img.jpg"
+                  },
+                  {
+                    "type":"text",
+                    "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type":"code",
+                "language":"c++",
+                "code":"for (int i = 0; i < 4; ++i) {\n  if (i == 0) {\n    extended.x = winxs;\n   extended.y = (winxs-light.x)/(edge->x-light.x)*(edge->y-light.y) + light.y;\n  } else if (i == 1) {\n    extended.x = winxe;\n    extended.y = (winxe-light.x)/(edge->x-light.x)*(edge->y-light.y) + light.y;\n  } else if (i == 2) {\n    extended.y = winys;\n    extended.x = (winys-light.y)/(edge->y-light.y)*(edge->x-light.x) + light.x;\n  } else if (i == 3) {\n    extended.y = winye;\n    extended.x = (winye-light.y)/(edge->y-light.y)*(edge->x-light.x) + light.x;\n  }\n"
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"This uses a function I came up with from vector math to extend a line segment to the edge of a wall. In it, we are trying to extend to each wall. Later the extended values are checked. Two of these extended points should work (lines will hit two walls), but only the one which makes the object corner between the light source and itself is kept."
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"This doesn't solve needing to draw to an intermediate buffer for each light, but makes it a lot more efficient, and adds some useful effects. Drawing was made more efficient by using triangle fans to draw shadows, and a blur shader was added to make the light look smoother."
+              }
+            ]
+         ]
+      },
+      {
+         "title":"Future Improvements",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"I really like how objects look in version 3, and am still thinking of a way to implement this in version 4. I intend on eventually making some sort of dungeon crawler game using this lighting engine."
+               }
+            ]
+         ]
+      }
+   ]
+}

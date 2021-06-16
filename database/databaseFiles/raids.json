@@ -1,0 +1,354 @@
+{
+  "pageId":"raids",
+   "title":"Dungeon Map Generation with Locks and Keys",
+   "tags":[
+      "Minecraft",
+      "Math"
+   ],
+  "masthead": {
+     "image": "raids/masthead.png",
+     "text-color": "#ffffff",
+     "background-color": "#0000ff",
+     "stroke-color": "#000000"
+   },
+   "page":[
+      {
+         "title":"Abstract",
+         "body":[[
+             {
+                "type":"text",
+                "text":"We will explore different methods for procedurally generating immersive dungeon puzzles involving locked doors and keys. Dungeons can be represented as a graph where nodes are rooms and edges are connections between rooms. Nodes can contain a key to unlock a specific edge, meaning you must find a path to the key node before you can pass along the corresponding locked edge. I will be investigating methods for efficiently resolving cycles in the dungeon graph through methods such as edge contraction, and figure out how to place doors and keys so that the dungeon is solvable."
+             }
+         ]]
+      },
+      {
+         "title":"Background",
+         "body":[
+             [{
+                "type":"text",
+                "text":"I'm working on a project that involves generating a dungeon on an mxn grid and placing keys throughout the dungeon. These keys are used to give access to new rooms."
+             }],
+             [{
+                "type":"text",
+                "text":"'Rooms' are predefined shapes that can be placed on the mxn dungeon grid, where each room is made of up pxp squares. For example, a room could be defined as"
+             }],
+             [{
+                "type":"code",
+                "language":"json",
+                "code":"1 1 1 1 1 1\n0 1 1 1 1 0\n1 1 1 1 1 1\n1 1 1\n1 1 1\n1 0 1"
+             }],
+             [{
+                "type":"text",
+                "text":"This room has entrance/exit points on the left and right and bottom and is made up of three 3x3 squares."
+             }],
+             [{
+                "type":"text",
+                "text":"I have the an algorithm for creating dungeons, but the current system requires placing barriers between rooms that could potentially have connections to ensure that there are no cycles for when the doors and keys are placed. For example, a barrier is placed here, even though a hallway could be placed instead."
+             }],
+              [{
+                "type":"code",
+                "language":"json",
+                "code":"1 1 1 | 1 1 1\n0 1 0 | 0 1 0\n1 1 1 | 1 1 1"
+             }],
+              [{
+                "type":"text",
+                "text":"Currently the solution for placing doors / keys involves choosing an edge for door placement, creating a subgraph where all the children of that edge are removed, then randomly placing the key in any node on the subgraph. This is repeated until there are no edges available for placing doors."
+             }],
+              [{
+                "type":"text",
+                "text":"I will be investigating this problem to see if there's an efficient way to take a graph with cycles and place doors/keys in such a way that doors cannot be avoided by the player. For example, in a 3-cycle if any one edge is made a door then the player can go around the door by going the opposite direction in the cycle. Two obvious potential solutions, the first is detecting cycles and collapsing them in order to make a non-cyclic graph which can then be used, and the second is to place multiple doors on the cycle to prevent the player from ignoring one single door."
+             }]
+         ]
+        },
+        {
+         "title":"Definitions",
+         "body":[
+            [{
+                  "type":"formatted-text",
+                  "text":"<b>Room</b> - Area a player can enter, and collect keys. Rooms have connections to other rooms defined by a graph. A room can contain 0 or 1 keys."
+               }],
+            [{
+                  "type":"formatted-text",
+                  "text":"<b>Map</b> - Collection of rooms on an n by n grid, where each room is 1 by 1 tile. Map G is a simple undirected graph G = (R, C) where R is the set of all rooms in the map and C is the set of all connections between rooms."
+               }],
+            [{
+                  "type":"formatted-text",
+                  "text":"<b>Door</b> - Connection between two rooms which is blocked off, until the player collects the corresponding key. Set of doors D is represented as a set of pairs of values (R1, R2) indicating the two rooms the door is between."
+               }],
+            [{
+                  "type":"formatted-text",
+                  "text":"<b>Key</b> - Used to unlock doors of corresponding type. Can be used multiple times. Set of keys K is a set of pairs of values (R, K) where R is a room and K is the colour of the key in that room."
+               }]
+         ]
+       },
+       {
+         "title":"Method",
+         "body":[
+         [
+         {
+           "type":"text",
+           "text":"This problem is an example of a key and lock puzzle. Note that the key and lock problem is in fact a puzzle and not a game. The distinction made is that this puzzle does not respond directly to the player."
+         }
+         ]
+         ]
+       },
+        {
+         "title":"Creating a Simplified Model",
+         "body":[
+         [
+         {
+           "type":"text",
+           "text":"We start by recreating the generation code using a simplified model, where all rooms are 3 by 3. The reason for the simplification here is to make the problem easier to describe and visualize, as well as work with and simulate. Is this model equivalent to a model where rooms can be multiple sizes?"
+         }
+         ],
+         [{
+           "type":"text",
+           "text":"Let’s say we have a grid of 3 by 3 rooms, where rooms a, b, c, d and e form a tree within the spanning tree of graph G. In a tree, a node can be removed by connecting the parent node to the children. If node a is the root of the subtree of graph G and node b, c, d and e are removed, node a will connect directly to the children of those nodes. Since we still have a tree, all algorithms described below will still work."
+         }],
+         [{
+           "type":"text",
+           "text":"The set of nodes a, b, c, d, e can be seen as one room with multiple segments. For this reason the two models are equivalent for the purpose of adding doors and keys. Below is an example of a random node structure. The key is the location of the node, and the children are the locations of other nodes that you can reach from the given node. Openings of the node are also shown, indicated with L (left), R (right), U (up), D (down)."
+         }],
+         [{
+           "type":"code",
+           "code":" (2, 2) {'L', 'D', 'R', 'U'}\n     (1, 2) {'L', 'D', 'R'}\n         (0, 2) {'U', 'R'}\n             (0, 1) {'L', 'D'}\n         (1, 3) {'U', 'L', 'R'}\n             (0, 3) {'L', 'R'}\n     (3, 2) {'L', 'U'}\n         (3, 1) {'L', 'D', 'R', 'U'}\n             (4, 1) {'L', 'U'}\n                 (4, 0) {'D', 'R'}\n             (3, 0) {'L', 'D', 'R', 'U'}\n     (2, 1) {'U', 'D', 'R'}\n         (2, 0) {'L', 'D', 'U'}\n             (1, 0) {'L', 'R'}\n                 (0, 0) {'L', 'D', 'R'}\n     (2, 3) {'U', 'L', 'D'}\n         (2, 4) {'U', 'L', 'D'}\n             (1, 4) {'U', 'D', 'R'}"
+         }],
+         [{
+           "type":"text",
+           "text":"Similar to the model using complex room shapes, this model can be represented as a spanning tree. Some directions aren’t able to be moved in, because they’re blocked off by the sides of other walls. Some nodes are connected in ways that aren’t described by a tree. We will be looking at which nodes are connected but not shown in the tree to find the cycles that exist. If a connection isn’t shown in the tree there is clearly a cycle, as there are two ways to reach the same node."
+         }],
+         [{
+           "type":"code",
+           "code":"1 0 1 1 0 1 1 0 1 1 0 1 1 0 1\n0 2 1 0 2 0 0 2 0 0 2 0 1 2 0\n1 3 1 1 3 1 1 3 1 1 3 1 1 3 1\n1 3 1 1 3 1 1 3 1 1 3 1 1 3 1\n0 2 0 0 2 3 3 2 0 0 2 3 3 2 1\n1 3 1 1 3 1 1 0 1 1 3 1 1 3 1\n1 3 1 1 3 1 1 1 1 1 3 1 1 3 1\n0 2 3 3 2 3 3 2 3 3 2 1 0 2 0\n1 1 1 1 3 1 1 3 1 1 3 1 1 3 1\n1 1 1 1 3 1 1 3 1 1 3 1 1 3 1\n0 2 3 3 2 1 1 2 0 0 2 1 0 2 0\n1 3 1 1 3 1 1 3 1 1 3 1 1 0 1\n1 3 1 1 3 1 1 3 1 1 3 1 1 0 1\n0 2 0 0 2 1 0 2 0 0 2 3 3 2 0\n1 0 1 1 0 1 1 0 1 1 0 1 1 1 1"
+         }],
+         [{
+           "type":"formatted-text",
+           "text":"We can see this event happening in this map which has been drawn. <i>2</i>’s represent the centre of rooms, <i>3</i>’s represent paths of the spanning tree, <i>0</i>’s represent empty space, <i>1</i>’s represent room walls. Based on these values, the pattern <i>2 0 0 2</i> would be connections not in the spanning tree that create cycles. The next step is programatically finding and listing these entries that cause cycles."
+         }],
+                  [{
+           "type":"code",
+           "code":"Loop found at (0, 1) R\nLoop found at (0, 4) R\nLoop found at (1, 0) R\nLoop found at (1, 1) L\nLoop found at (1, 4) L\nLoop found at (2, 0) L\nLoop found at (2, 0) R\nLoop found at (2, 1) R\nLoop found at (2, 3) R\nLoop found at (2, 4) R\nLoop found at (3, 0) L\nLoop found at (3, 1) L\nLoop found at (3, 3) L\nLoop found at (3, 4) L\nLoop found at (4, 3) D\nLoop found at (4, 4) U"
+         }],
+         [{
+           "type":"img",
+           "src":"raids/Figure_1.png"
+         },
+         {
+           "type":"text",
+           "text":"The graph can be visualized in multiple ways. In this diagram, black lines show the spanning tree, and red lines show the connections that appear but are not accounted for. Nodes names are calculated by xpos * size + ypos. An interesting observation is that the upper bound on the percentage of spanning tree edges to edges not in the spanning tree is of the form x / (x+1)."
+           }],
+           [
+           {
+           "type":"text",
+           "text":"This is calculated from the fact that a spanning tree has n-1 edges given n nodes, and a grid has 2n^2-2n edges. Calculating the upper bound on a 5 by 5 grid gives us 9/10, meaning at most 90% of the edges in the map can create cycles"
+           }
+           ],
+           [
+           {
+           "type":"code",
+           "code":"(2n^2-2n - (n-1)) / (2n^2-2n)\n= (2*5^2-2*5 - (5-1)) / (2*5^2-2*5)\n= 9 / 10"
+         }
+           ]
+         ]
+       },
+       {
+         "title":"Cycle Resolution Methods",
+         "body":[
+         [{
+           "type":"formatted-text",
+           "text":"<b>Edge Removal</b> - Add a wall in all connections that are not part of the spanning tree"
+         }],
+         [
+         {
+           "type":"text",
+           "text":"This is the simplest solution. It involves placing walls in all connections that are not in the spanning tree. Since a spanning tree is known to have no cycles, this solution would always result in a map without cycles. Another benefit of this method is key placement can be done with a very simple method. Once implemented, this successfully removes all cycles. Notice how there are no 2 0 0 2 patterns below."
+           }
+           ],
+           [{
+           "type":"code",
+           "code":"1 0 1 1 1 1 1 0 1 1 0 1 1 0 1\n1 2 1 1 2 3 3 2 0 1 2 1 1 2 0\n1 3 1 1 3 1 1 0 1 1 3 1 1 3 1\n1 3 1 1 3 1 1 1 1 1 3 1 1 3 1\n0 2 3 3 2 1 1 2 3 3 2 3 3 2 1\n1 3 1 1 0 1 1 1 1 1 3 1 1 3 1\n1 3 1 1 1 1 1 1 1 1 3 1 1 3 1\n0 2 3 3 2 3 3 2 3 3 2 1 0 2 1\n1 3 1 1 1 1 1 3 1 1 3 1 1 1 1\n1 3 1 1 0 1 1 3 1 1 3 1 1 1 1\n0 2 1 0 2 3 3 2 1 1 2 3 3 2 0\n1 3 1 1 3 1 1 3 1 1 3 1 1 3 1\n1 3 1 1 3 1 1 3 1 1 3 1 1 3 1\n0 2 1 0 2 1 1 2 1 1 2 1 1 2 1\n1 0 1 1 0 1 1 0 1 1 1 1 1 1 1 "
+         },
+      {
+           "type":"img",
+           "src":"raids/Figure_2.png"
+         }
+           ],[{
+           "type":"formatted-text",
+           "text":"<b>Edge Collapsing</b> - Collapse edges until no cycles exist"
+         }],[
+         {
+           "type":"text",
+           "text":"This solution wouldn’t work. The first problem is when this is done on an n-cycle in a graph, n-1 nodes are removed. We want to avoid removing rooms. Removing rooms results in higher variation in map sizes, which is bad for playability and content."
+           }
+           ],[
+         {
+           "type":"text",
+           "text":"The second and larger problem is that we cannot create connections between any two rooms. Once rooms are placed it would be computationally difficult to figure out how to move them around again to satisfy edge collapsing. There is also no guarantee two rooms are capable of fitting together. When collapsing edges, there are situations in this model where rooms could have 5 connections which wouldn’t be possible in a grid where the only entrances are left, right, up and down."
+           }
+           ],[{
+           "type":"formatted-text",
+           "text":"<b>Cycle Door Addition</b> - Add a door at edges that create cycles, and place the key in the node on the side of the edge furthest from the root."
+         }],[
+      {
+           "type":"img",
+           "src":"raids/Figure_3_2.png"
+         },{
+           "type":"text",
+           "text":"A door is added at (16, 17). This removes a cycle. A key is placed in node 16, becuase its shortest path to the root node 0 is longer than the shortest path from 0 to 17. As we can see, adding a door in this location doesn’t actually block off any content. It simply creates a shortcut from node 16 to node 17 once node 16 has been reached. It also requires that the door on edge (16, 17) is able to be opened from either side, meaning that the door must look good on both sides, and have an animation for opening in both directions."
+         }
+           ],[{
+           "type":"text",
+           "text":"While this solution could work, it is only useful for adding shortcuts and not blocking off entire sections to ensure players must find a key before continuing. Looking at this example, it is clear that we need to use multiple doors of the same colour to block off sections with cycles."
+         }
+           ],[{
+           "type":"formatted-text",
+           "text":"<b>Pathfinding Collision Removal</b> - Add doors, pathfind to behind the door to check if it’s accessible. If it is, create a list of paths and place the minimum number of doors to block all paths. Luckily the library we’re using for graphs, networkx, supports finding all paths from one node to another. For example given this graph, this is a list of paths from node 0 to node 3."
+         }],[{
+           "type":"code",
+           "code":"['0', '1', '6', '11', '12', '17', '18', '19', '14', '13', '8', '3']\n['0', '1', '6', '11', '12', '17', '18', '19', '14', '9', '8', '3']\n['0', '1', '6', '11', '12', '17', '18', '13', '8', '3']\n['0', '1', '6', '11', '12', '17', '18', '13', '14', '9', '8', '3']\n['0', '1', '6', '11', '12', '13', '8', '3']\n['0', '1', '6', '11', '12', '13', '14', '9', '8', '3']\n['0', '1', '6', '11', '12', '13', '18', '19', '14', '9', '8', '3']\n['0', '1', '6', '7', '8', '3']\n['0', '5', '6', '11', '12', '17', '18', '19', '14', '13', '8', '3']\n['0', '5', '6', '11', '12', '17', '18', '19', '14', '9', '8', '3']\n['0', '5', '6', '11', '12', '17', '18', '13', '8', '3']\n['0', '5', '6', '11', '12', '17', '18', '13', '14', '9', '8', '3']\n['0', '5', '6', '11', '12', '13', '8', '3']\n['0', '5', '6', '11', '12', '13', '14', '9', '8', '3']\n['0', '5', '6', '11', '12', '13', '18', '19', '14', '9', '8', '3']\n['0', '5', '6', '7', '8', '3']"
+         },
+      {
+           "type":"img",
+           "src":"raids/Figure_3.png"
+         }
+           ],[{
+           "type":"text",
+           "text":"From visual inspection, we can see that adding doors on edge (6, 11) and edge (6,7) is one of a few solutions. Optimally, we want to place the minimum number of the same colour door. In this example, the minimum number of doors placed would be one to block off the path from 0 to 3, on edge (8,3)."
+         }],[{
+           "type":"text",
+           "text":"Finding a way to remove the minimum number of edges to disconnect two nodes is called the minimum cut problem, which is solved using a maximum flow graph. What we are looking for is a cut. A cut is a set of edges whose removal divides a connected graph into two disjoint subsets."
+         }],[{
+           "type":"text",
+           "text":"Networkx can solve this for us given a graph, source and sink nodes. Networkx’s implementation will return the minimal cut set closest to the sink node, meaning that in the example above it would return {(8, 3)}. As another example, using nodes 4 to 24 the algorithm would return {(19,24)}. This appears to be the best solution. It has no apparently problems other than performance, which is negligible considering how few nodes we will have. This solution will be investigated further."
+         }]]},
+         
+         
+         
+         
+      {
+         "title":"Key Placement Methods",
+         "body":[
+         [{
+           "type":"text",
+           "text":"To simplify key placement in rooms, we will only allow one key per room. This will allow keys to be  placed in predetermined places in each rooms, and only requires one defined key placement location per room which reduces the amount of manual work needed in defining tiles that can contain keys."
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Recursive Placement with Node Removal</b><br>A simple method for placing keys is<br><ul><li>Pick an edge, and place a door on that edge</li><li>Mark all nodes behind that door as unusable for future key / door placement</li><li>Place the key to that door in any of the usable nodes</li><li>Repeat until only the root node is usable or all usable rooms contain keys</li></ul>"
+         }],
+         [{
+           "type":"text",
+           "text":"This method would ensure every room is accessible. When a door is placed we know for sure that the key is accessible. Through induction we can see that when starting out, there will be at least one key accessible, and this key will allow you to access at least one more key, until all keys have been found. This method would only work on a spanning tree, because only one edge is chosen for door placement and we know multiple doors of the same type must be places when cycles exist."
+         }],[{
+           "type":"formatted-text",
+           "text":"A modification can be done to make this work with our cycle resolution method from <i>Pathfinding Collision Removal</i>. The new steps are as follows:<br><ul><li>Find the longest path starting from the root node</li><li>Select the two nodes at the end of this list, and find the minimal cut set between them</li><li>Add doors on the cut set edges</li><li>Mark all nodes behind that door as unusable for future key / door placement</li><li>Place the key to that door in any usable node</li><li>Repeat until only the root node is usable or all usable rooms contain keys</li></ul>"
+         }],[{
+           "type":"text",
+           "text":"Some interesting variables can be used here to give different map properties. Instead of using the last two nodes in step 2, we can select any two nodes on the path. We require the two chosen nodes to form a path with the root node to ensure the doors are facing the root node. If the doors were facing away, we would end up with the key in a location that can’t be accessed from the root node. Varying which nodes you select on the path could change the density of doors and keys, which is a useful feature for changing the difficulty of the map. Nodes can also be chosen to minimize the number of doors needed. This would make the map easier for the player to remember and therefore play. Having many doors of the same colour may be confusing to the player."
+         }],[{
+           "type":"text",
+           "text":"Key placement could be controlled to vary the distance the player needs to walk. If the key is at the maximum distance from the door, the path the player must take to complete the map will be maximized. Placing keys within n number of rooms of the door could make the map more enjoyable for the player, as they wouldn’t have to walk through tons of rooms that they may have already seen."
+         }],[
+      {
+           "type":"img",
+           "src":"raids/Figure_4.png"
+         }],[{
+           "type":"text",
+           "text":"The algorithm described above generated this map. Rooms with keys are outlined in the colour of the key they contain. Coloured edges have doors which require a key of the edge colour. Are there any problems with this method?"
+         }],[{
+           "type":"text",
+           "text":"Yes. As seen in the image above, it is still possible to go around edges. It is possible to reach nodes 24 and 23 before unlocking the edge between them, meaning the back of a door will be visible which is something we want to avoid. A possible solution could be to use the entire graph when finding the minimum cut set of two nodes and either have some doors require multiple keys, or make edges with doors uncuttable. These solutions would result in an n-cycle only being able to have n/2 different types of doors in the best case, where the entire map is one cycle. In a less favourable situation such as a grid where everything is connected, assuming the player starts in the centre you could need up to 2*(n-1) doors of the same type, where n is the grid side length. This is because the maximum cut set from the centre to a corner is 2*(n-1)."
+         }],[
+      {
+        "width":"1",
+           "type":"img",
+           "src":"raids/grid_42670_sm.gif"
+         },{
+           "width":"4",
+           "type":"text",
+           "text":"This is a 7x7 grid. Every edge that the line in this image passes through must have a door in order to prevent the player from reaching the goal in the top right. 12 doors would be needed here, or 2*(7-1). In the worst case, a 5 by 5 map could have at most 6 different types of doors. This map would be very simple, and not very fun. Potentially having this many edges use the same door is not optimal as it would be frustrating for the player to always run in to the same door when trying to get to a goal, and it would be non-intuitive to have the same door in so many places."
+         }],[{
+           "type":"formatted-text",
+           "text":"A third solution that solves the problem above could be to change the way nodes are removed. Instead of only removing the nodes cut off by the doors, we can mark the nodes that are now connected to doors as nodes that cannot be used as the sink or source nodes. This would only need to be done in cases where the cut set is larger than one edge, meaning there is a cycle. Doing this would prevent overlaps in doors when the entire map is used to calculate the cut set. In this solution, we can see that in an n by n grid there can be at most n2/2 different types of keys. This is found from the fact that every other node can have a different type of lock required, with half the nodes not being usable because they are connected to a node that has locked edges. The placement of nodes with locked edges would resemble a checker board pattern. The easiest solution to work with is blocking off all cycles and only use the connections from the spanning tree, which is the method defined in <i>Edge Removal</i>."
+         }],[
+      {
+           "type":"img",
+           "src":"raids/Figure_6.png"
+         }],[{
+           "type":"text",
+           "text":"In this image all edges not part of the spanning tree are removed. There is still an issue in terms of playability. Keys should not be able to be placed near the door which the key unlocks, because it would be pointless to have a key right next to its door. This would be a lower bound on the distance a key can be from its door. In addition to this, we can set an upper bound on the distance from the key to the door, to prevent the player from needing to walk too far to find the correct key."
+         }],[{
+           "type":"text",
+           "text":"It would also be a good idea to not allow the key to be placed on nodes that are in the path from the root to the node being locked. Doing this would force the player to explore more parts of the map. Here’s a map generated using the rules described above, where the lower bound on distance from key to door is 2, and the upper bound is 6."
+         }],[
+      {
+           "type":"img",
+           "src":"raids/Figure_7.png"
+         }]
+         ]
+       },{
+         "title":"Implementing the Solution + Putting it All Together",
+         "body":[
+         [
+         {
+           "type":"img",
+           "src":"raids/Figure_8.png"
+         }
+         ],[{
+           "type":"text",
+           "text":"When the solution ‘Third Solution’ from above is implemented, it generates maps that look great and does no appear to have problems. Cycles aren’t an issue, getting behind doors isn’t an issue, and maps can still be densely populated with many different types of doors and keys. In this map node 12 is the starting point."
+         }]
+         ]
+       },{
+         "title":"Placing Boss Rooms",
+         "body":[[{
+           "type":"text",
+           "text":"Boss rooms will be rooms that contain a way to teleport to the boss. This teleport can be put in any room, meaning that any room can be turned in to a ‘Boss room’. Optimally, boss rooms should be placed in a way to maximize the number of rooms that need to be explored. Without doors and keys, this would be the node with the maximum path length from the tree root. When locks and keys are involved, the ‘furthest’ location isn’t always the longest path, as in some cases edges must be traversed multiple times to get to every node. For simplicity, boss rooms will be placed in nodes which have the most doors on the path to the root node."
+         }]
+         ]
+       },{
+         "title":"Map Playability Metrics",
+         "body":[
+         [{
+           "type":"text",
+           "text":"Maps can be rated based on metrics. If they score too low, they could be seen as ‘unplayable’, and need to be regenerated."
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Long Paths</b><br>Long linear paths aren’t fun to play. This metric can count the nodes of degree 2, and assign a low score if there are many of them."
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Number of Keys</b><br>Maps with more keys can be seen as ‘challenging’, as it will take more time to collect all the keys and navigate the map. This could be used to rate the map’s difficulty."
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Number of Nodes</b><br>More nodes would mean it takes longer to complete the map, resulting in a higher difficulty."
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Distance to Boss Node</b><br>Longer distances to the boss node would mean the map takes longer to complete. This would also rate the difficulty of the map, but would have more weight than Number of Keys and Number of Nodes"
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Number of rooms of the same type</b><br>We want to avoid having too much repetition. Having many rooms of the same type close to each other makes the game less enjoyable."
+         }],[{
+           "type":"formatted-text",
+           "text":"<b>Long Paths</b><br>Long linear paths aren’t fun to play. This metric can count the nodes of degree 2, and assign a low score if there are many of them."
+         }]
+         ]
+       },{
+         "title":"Conclusion",
+         "body":[[{
+           "type":"text",
+           "text":"It is not simple to generate dungeons with correct lock-and-key structures. The majority of the papers I read on this topic had to do with placing the keys and locks in a way that engages the player, and measures the engagement over time based on when keys are collected, locks are used, and how close the player is to the end goal. These are all interesting concepts that could definitely add a lot of depth to this project, and are worth looking in to in the future. In the end we found a solution to placing doors and keys on a map, which was the goal. A worst case upper bound of n^2/2 keys place-able with this method was found."
+         }]
+         ]
+       },
+       {
+         "title":"Related Works / Resources",
+         "body":[
+         [
+         {
+           "type":"formatted-text",
+           "text":"Ashmore, Calvin. <i>Key and Lock Puzzles in Procedural Gameplay</i>, Apr. 2016,<br><a href=\"https://smartech.gatech.edu/bitstream/handle/1853/16823/ashmore-thesis.pdf\">https://smartech.gatech.edu/bitstream/handle/1853/16823/ashmore-thesis.pdf</a><br><br>Ashmore, Calvin; Michael Nitsche, <i>The Quest in a Generated World</i>, 2007<br><a href=\"https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.70.9841&rep=rep1&type=pdf\">https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.70.9841&rep=rep1&type=pdf</a><br><br>Becky Lavender; Tommy Thompson, <i>Adventures in Hyrule: Generating Missions & Maps For Action Adventure Games</i>, June 2015<br><a href=\"https://www.researchgate.net/profile/Tommy-Thompson-2/publication/280943730_Adventures_in_Hyrule_Generating_Missions_Maps_For_Action_Adventure_Games/links/55cdc67008ae6a88138045dc/Adventures-in-Hyrule-Generating-Missions-Maps-For-Action-Adventure-Games.pdf\">https://www.researchgate.net/profile/Tommy-Thompson-2/publication/280943730_Adventures_in_Hyrule_Generating_Missions_Maps_For_Action_Adventure_Games/links/55cdc67008ae6a88138045dc/Adventures-in-Hyrule-Generating-Missions-Maps-For-Action-Adventure-Games.pdf</a><br><br>Dormans J., <i>Engineering emergence: applied theory for game design</i>, 2012<br><a href=\"https://pure.uva.nl/ws/files/1167841/102094_12.pdf\">https://pure.uva.nl/ws/files/1167841/102094_12.pdf</a><br><br>Jose M. ; Roberto Izquierdo; Daniel Manrique; Julian Togelius, <i>Constrained Level Generation Through Grammar-Based Evolutionary Algorithms</i>, 15 March 2016<br><a href=\"https://link.springer.com/chapter/10.1007/978-3-319-31204-0_36\">https://link.springer.com/chapter/10.1007/978-3-319-31204-0_36</a><br><br>Leonardo T. Pereira; Paulo V.S. Prado; Claudio Toledo <i>Evolving Dungeon Maps With Locked Door Missions</i>, 04 October 2018,<br><a href=\"https://ieeexplore.ieee.org/abstract/document/8477718\">https://ieeexplore.ieee.org/abstract/document/8477718</a><br><br>Roland van der Linden; Ricardo Lopes; Rafael Bidarra, <i>Designing Procedurally Generated Levels</i>, 2013<br><a href=\"https://ojs.aaai.org/index.php/AIIDE/article/view/12592/12440\">https://ojs.aaai.org/index.php/AIIDE/article/view/12592/12440</a><br><br>Thomas Smith; Julian Padget; Andrew Vidler, <i>Graph-based generation of action-adventure dungeon levels using answer set programming</i>, Aug. 2018<br><a href=\"https://dl.acm.org/doi/abs/10.1145/3235765.3235817\">https://dl.acm.org/doi/abs/10.1145/3235765.3235817</a>"
+         }
+         ]
+         ]
+       }
+    ]
+}

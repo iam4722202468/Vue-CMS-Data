@@ -1,0 +1,133 @@
+{
+   "pageId":"4",
+   "title":"Working at Focus21",
+   "tags":[
+      "Node.js",
+      "HTML",
+      "Sass",
+      "Javascript",
+      "JQuery",
+      "MongoDB",
+      "Yarn",
+      "Webpack",
+      "Babel"
+   ],
+   "masthead": {
+     "text-color": "#000000",
+     "background-color": "#ffffff"
+   },
+   "page":[
+      {
+         "title":"Abstract/Introduction",
+         "body":[
+            [
+              {
+                "type":"container",
+                "contents": [
+                  {
+                    "type":"text",
+                    "text":"For my first two co-op terms, I had the pleasure to work at Focus21 in Kitchener, Ontario."
+                  },
+                  {
+                    "type":"text",
+                    "text":"During my time at Focus21 I met amazing people, learned about the scrum framework for software development, and learned about teamwork, web development, and client communication."
+                  }
+                ]
+              },
+               {
+                  "type":"img",
+                  "src":"focus-21/logo.png"
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Information about the Employer",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Focus21 helps clients co-create digital platforms with purpose. At Focus21, designers and developpers work together to build software which will help the client solve business problems. While I was working at Focus21, two popular projects were PSHSA-Website and Volii. PSHSA-Website was the project I was working on. This project was to recreate the current functionality of Public Service Health and Safety Association's website, with a more modern design and better code which will help with maintainability. Volii is a website where people can create events for users to voulenteer at, and helps users can find events to voulenteer at."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Co-op Learning Goals",
+         "body":[
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"My co-op learning goals were to:<br><br>&nbsp;&nbsp;1. Become more friendly with coworkers<br>&nbsp;&nbsp;2. Improve ability to explain complex concepts<br>&nbsp;&nbsp;3. Improve knowledge of Javascript and development frameworks and methods"
+               }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"During the span of my 8 month co-op, I would say I accomplished all these goals."
+              }
+            ],
+            [
+              {
+                "width":"3",
+                "type":"text",
+                "text":"In my time at Focus21 everyone was very friendly and welcoming. I made many friends that I hope to keep in contact with and potentially work with again in the future. My ability to explain complex concepts has definitely increased. Throughout the co-op I told many people about the interesting projects I have made, and how they work in great detail. One of the projects I talked about was the course scheduler. I explained how the back end of this project works, and how I optimized the part of the program that generates schedules by finding collisions. Working with Javascript every day for 8 months has really helped me understand it. There are many interesting things I have learned about it, such as how to use the filter, reduce and map methods of arrays. These proved to be very useful."
+              },
+              {
+                "width":"2",
+                "type":"img",
+                "src":"focus-21/team-1.jpg"
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"All these goals were strongly related to my task at Focus21, full stack developpment. While using the scrum framework I worked closely with many people, including clients. In the project I was working on, the clients attended all daily standups. Daily standups were short meetings where each team member would give an update on what they worked on the previous day, plan to work on during the present day, and tell their team members about tickets that are blocked. These meetings helped me learn to communicate with clients in a professional way, and deal with scope creep and unusual client requests."
+              }
+            ],
+            [
+              {
+                "type":"text",
+                "text":"Going in to this experience, I wanted to learn how to work effectively in a team. All previous experience had been developping software alone. During this co-op I improved my skills working in a team, through learning how to use git efficiently and adding productive commentary during sprint retrospective, a meeting done after every sprint where team members give feedback on what went well in the sprint, and what could be improved on. These skills will help me in the future, as working in teams is something that I will be doing in all co-ops. Scrum becoming a very popular framework for software development, and having experince with it is great."
+              },
+              {
+                "type":"text",
+                "text":"The technologies that I wanted to work with during this co-op were React, a very popular web framework. Sadly, I did not have the ability to work with React. Instead, I was put on a project which involved working with JQuery. JQuery is not a very nice framework, and without good programming practices developpers generally write very messy code with it. Another technology used in this project was a NodeJs CMS called Apostrophe. Throughout the project our team regretted choosing Apostrophe. It is a relatively new CMS, with little to no documentation. For small blogs it is not bad, but it was not a good solution for the project which we were building. Apostrophe had no easy way to implement an e-commerce platform, which was one of the largest parts of this project."
+              },
+              {
+                "type":"text",
+                "text":"As a full stack developper I worked with both front end and back end code, and gained experience with both. I enjoyed both sides for different reasons. Working on the front end was fun because I got to implement cool designs, and the work was very easy. That being said, it was repetitive and eventually got boring. Working with back end code, I was able to implement API's and database calls. This was fun because each problem was unique, and I had tons of freedom in the way I did them. Overall I enjoyed working on server side code more than client side code."
+              }
+            ]
+         ]
+      },
+      {
+         "title":"Job Description",
+         "body":[
+            [
+               {
+                  "width":"3",
+                  "type":"text",
+                  "text":"Working at Focus21, I needed web developpment skills. This included knowledge of MongoDB, JQuery, and NodeJs. Going in to the job I was already very familiar with all these technologies, which allowed me to quickly start committing code. These skills were all learned through doing personal project. The most interesting aspect of the job was how quickly they let me start committing code. By the third day I was pulling tickets from the sprint backlog, creating merge requests and pushing code. Many of my friends had to go through one or two week long training sessions. Another cool part was the machines we were given to work with. Many people had new Dell Precision laptops with quad core i7's and gtx 1050's. I was given a quadcore macbook, and later upgraded to an Alienware R3 with an i7-7820HK and a gtx 1080 GPU."
+               },
+               {
+                 "width":"2",
+                 "type":"img",
+                 "src":"focus-21/team-2.jpg"
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Conclusion",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"The co-op term that I had at Focus21 was both fun and educational. I learned more about interacting with clients and co-workers, working with other developpers, and gained knowledge of useful methods and functions build in to Javascript and JQuery. Working with the Apostrophe CMS was interesting, although at times annoying, as there was very little documentation on how it worked. Overall this was an amazing experience which has taught me more than I expected to learn, and I am grateful that I had the oppertunity to work with so many amazing people.  "
+               }
+            ]
+         ]
+      }
+  ]
+}

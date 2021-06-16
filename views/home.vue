@@ -1,15 +1,15 @@
 <template>
-  <StaticPage pageId="5">
-  </StaticPage>
+  <HomePage pageId="5">
+  </HomePage>
 </template>
 
 <script>
-  import StaticPage from '@/components/StaticPage.vue'
+  import HomePage from '@/components/HomePage.vue'
 
   export default {
     name: 'co-op_1',
     components: {
-      StaticPage
+      HomePage 
     }
   }
 </script>

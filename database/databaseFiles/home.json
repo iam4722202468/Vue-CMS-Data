@@ -1,0 +1,125 @@
+{
+   "pageId":"5",
+   "title":"Alexander Parent",
+   "page":[
+      {
+         "title":"",
+         "body":[
+            [
+              {
+                "type":"masthead",
+                "src":"home/masthead.png",
+                "text":"Alexander Parent"
+              }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"This is my new website! It's being created using a CMS for vue.js that I'm developing. Currently in beta, as not everything works and looks perfect yet. Future plans for this CMS include live editing of pages and open sourcing it."
+               },
+               {
+                  "type":"text",
+                  "text":"All my latest projects will be found here, as editing pages and creating new content for this is way easier than on the last website. I plan to migrate everything from the old site here eventually."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ]
+         ]
+      },
+      {
+        "title":"Recent Projects",
+        "body": [
+          [
+            {
+              "type":"card-group",
+              "contents": [
+                {
+                  "type":"card",
+                  "title":"Guelph Course Scheduler",
+                  "text":"Popular application for creating course schedules at the University of Guelph. Used by over 2000 students every semester.",
+                  "src":"home/icons/scheduler.png",
+                  "url":"/#/scheduler"
+                },
+                {
+                  "type":"card",
+                  "title":"Dungeon Map Generation with Locks and Keys",
+                  "text":"Generator for raids in my upcoming Minecraft MMORPG World Seed Online",
+                  "src":"raids/icon.png",
+                  "url":"/#/raids"
+                },
+                {
+                  "type":"card",
+                  "title":"C++ Lighting Engine",
+                  "text":"2D Lighting engine written in C++. Uses ray casting and layering to create realistic lighting effects",
+                  "src":"lightEngine/4.png",
+                  "url":"/#/lightingengine"
+                },
+                {
+                  "type":"card",
+                  "title":"Monte Carlo Tree",
+                  "text":"Design to approximate the NP complete scheduling problem",
+                  "src":"home/icons/tree.png",
+                  "url":"/#/montecarlotree"
+                },
+                {
+                  "type":"card",
+                  "title":"Scala Import Sorter",
+                  "text":"Popular Scala library to sort imports. Contributed substantial amounts of code.",
+                  "src":"home/icons/sorting.png",
+                  "url":"https://github.com/NeQuissimus/sort-imports"
+                },
+                {
+                  "type":"card",
+                  "title":"Ultimate Thinkpad T420",
+                  "text":"Writeup of how I created the ultimate open-source laptop",
+                  "src":"t420/IMG_20181220_212426.jpg",
+                  "url":"/#/t420"
+                },
+                {
+                  "type":"card",
+                  "title":"Vue-CMS",
+                  "text":"CMS designed with Vue.js. The CMS this website was made with!",
+                  "src":"home/icons/Screenshot_2019-10-23_01-29-55.png"
+                },
+                {
+                  "type":"card",
+                  "title":"T420 Battery Design",
+                  "text":"Open source battery for the Thinkpad T420",
+                  "src":"battery/pictures/Screenshot_2020-08-27_21-44-02.png",
+                  "url":"/#/battery"
+                },
+                {
+                  "type":"card",
+                  "title":"T420 Battery Design Part 2",
+                  "text":"Open source battery for the Thinkpad T420 Part 2",
+                  "src":"battery2/resized/clip.jpg",
+                  "url":"/#/battery2"
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "title":"Presentations",
+        "body": [
+          [
+            {
+              "type":"card-group",
+              "contents": [
+                {
+                  "type":"card",
+                  "title":"Reverse Engineering with GDB and Linux",
+                  "text":"Introduction to using tools on Linux such as strings and GDB to reverse engineer, patch and exploit x86 executables.",
+                  "src":"home/icons/images.jpeg"
+                }
+              ]
+            }
+          ]
+        ]
+      }
+   ]
+}

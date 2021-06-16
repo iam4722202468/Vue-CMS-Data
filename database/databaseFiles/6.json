@@ -1,0 +1,204 @@
+{
+   "pageId":"6",
+   "title":"Working at eSentire",
+   "tags":[
+      "Kubernetes",
+      "Scala",
+      "Kafka Streams",
+      "ZIO"
+   ],
+   "masthead": {
+     "text-color": "#000000",
+     "background-color": "#ffffff"
+   },
+   "page":[
+      {
+         "title":"Abstract/Introduction",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Starting May 2019, I completed a 4 month long co-op  workterm at eSentire. In my position as a member of the Advanced Threat Analytics Team (ATA) I learned a ton about technologies such as Scala, Kafka Streams, Kubernetes and Docker. I had a great time working with cool and knowledgeable people."
+               },
+               {
+                  "type":"img",
+                  "src":"esentire/logo.png"
+               }
+            ],
+            [
+
+            ]
+         ]
+      },
+      {
+         "title":"Information about the Employer",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"eSentire is a security company that provides Managed Detection and Response security services for its clients."
+               }
+            ]
+         ]
+      },
+      {
+        "title":"Job Description",
+        "body":[
+          [
+            {
+              "type":"text",
+              "text":"At eSentire I worked with Tim Steinbach and Ryan Hasmatali on the Scala section of the ATA pipeline. We developed software to pull information from different sources such as AWS and Sumologic. This information was then put on to Kafka Streams topics for further processing."
+            }
+          ]
+        ]
+      },
+      {
+         "title":"Co-op Learning Goals",
+         "body":[
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn how and where to use flatmap and map in Scala</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Continue working with the team and looking at more code written by them"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Knowing what flatmap and map do"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"After working with Scala for four months, I’ve learned the difference between these two transformations. Maps will map data directly, while flatmap will do a flatten and a map. In my experience, flatmap has tons of uses, but was primarily used for ‘chaining’ ZIO’s together. For example, we would call an API to get data and then do something with this data. The first function would return of ZIO object containing the data, and then a flatmap would allow us to describe how to access the data at run time. This couldn’t be done with a map because maps won’t do what we want with ZIO’s. Map, by comparison, is much more strait-forward. It will take an iterable of a data type and return each element mapped using the given function."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Learn how the software development stack works at eSentire in the ATA team</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Complete at least one project before leaving"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Learn all the components of a project, including the Kubernetes config files, the sbt config files and the docker config files"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"I’ve learned how the stack works at eSentire. I’ve written multiple nix files which describe how Kubernetes should be setup, and include environment variables. Sbt was essential to learn, as it’s the build tool for Scala. Sbt allows you to compile, test, validate, format and run code written. I didn’t do much work with docker other than writing Jenkins files which will build a docker container to run the code."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Complete the work assigned on time</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Plan: Prioritize time to get projects done before the given deadline"
+               },
+               {
+                  "type":"text",
+                  "text":"Measure: Completing projects before they are due"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Many projects were completed before leaving, with the help of Ryan and guidance from Tim. When first learning Scala, pair programming with Ryan really helped me understand how ‘good’ code was written, and helped me learn the tricks needed for working with these libraries. One of the most important skills taken away from this co-op is probably learning how to really read documentation for libraries and be able to use the information given efficiently. After learning this, adding large new libraries to projects or calling new API’s became easy."
+               }
+            ]
+         ]
+      },
+      {
+          "title":"Highlights of Working at eSentire",
+          "body":[
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Testing</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"A highlight of working at eSentire and working with Scala was the testing libraries we had available for ensuring code was high quality and worked well. Sbt had commands to format code properly, which made all the code pushed look similar. We also had a great testing library built on ScalaTest. Code had to have 100% test coverage, and this testing library made it easy to write tests. Traits such as KafkaInMemory and HTTPInMemory allowed us to test everything in memory, which saved time calling API’s."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Scala</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Learning how to program in Scala had a very steep learning curve, especially considering no functional programming is taught at Guelph. Lots of these concepts were new to me, and it took a few months to really feel comfortable with not using variables anymore, and putting maps, flatmaps and sequences everywhere. Scala is great and I will continue to use it in the future. I would definitely put it in the top 10 programming languages I know (I know around 8)."
+               }
+            ],
+            [
+              {
+                "type":"divider"
+              }
+            ],
+
+            [
+               {
+                  "type":"formatted-text",
+                  "text":"<h5>Documentation</h5>"
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"There was none, but it wasn’t needed because Scala's type safety and highly readable code."
+               }
+            ]
+          ]
+      },
+      {
+         "title":"Conclusion",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"This co-op was a great experience, and I have learned a lot about functional programming. During the past 4 months I’ve met cool people who know a lot about programming. This co-op was a great opportunity to develop my skills as a programmer, teaching me about many new technologies and programming paradigms."
+               }
+            ]
+         ]
+      }
+   ]
+}

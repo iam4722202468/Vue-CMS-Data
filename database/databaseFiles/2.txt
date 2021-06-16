@@ -1,0 +1,229 @@
+{
+   "pageId":"2",
+   "title":"About Page 2",
+   "tags":[
+      "C++",
+      "Supported",
+      "Popular",
+      "Python",
+      "Node.js",
+      "HTML",
+      "CSS3",
+      "Sass",
+      "Javascript",
+      "Github",
+      "JQuery",
+      "MongoDB",
+      "Yarn",
+      "Webpack",
+      "Babel"
+   ],
+   "related":[
+      {
+         "text":"Home",
+         "url":"/home"
+      },
+      {
+         "text":"Old Website",
+         "url":"www.aceparent.me"
+      }
+   ],
+   "masthead": {
+     "text-color": "#000000",
+     "background-color": "#ffffff"
+   },
+   "prev":{
+      "text":"v1",
+      "url":"/home"
+   },
+   "next":{
+      "text":"v3",
+      "url":"/home"
+   },
+   "page":[
+      {
+         "title":"Subheader 100",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               },
+               {
+                  "type":"text",
+                  "text":"2. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"3. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"4. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               },
+               {
+                  "type":"img",
+                  "src":"img.jpg"
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Subheader 2",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               },
+               {
+                  "type":"text",
+                  "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"AM4 Socket",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"AMD has promised AM4 CPU socket compatibility until 2020 for all its Ryzen processors. That means you should be able to use any AMD Ryzen processor on any AM4 motherboard, providing AMD’s customers with a solid upgrade path in the future. That stands in stark contrast to Intel’s frequent socket changes that find enthusiasts having to migrate to new boards and chipsets. AMD’s long-lived support for the AM4 socket has earned plenty of cachet with enthusiasts, but it also restricts the company’s options for the new 3000-series processors."
+               },
+               {
+                  "type":"text",
+                  "text":"We also don’t expect a move forward to DDR5 in the near future, as we haven’t seen enough signs in the broader motherboard and memory module ecosystem to indicate there will be a wholesale move to the new standard next year. While its market share is growing, AMD doesn't likely have the pull to drive the move to DDR5. That will likely have to come from Intel."
+               }
+            ],
+            [
+               {
+                  "type":"container",
+                  "contents":[
+                     {
+                        "type":"text",
+                        "text":"Provided that AMD releases the 3000-series Ryzen processors in 2019, the AM4 socket gives us a few hints about the possible configurations. The AM4 socket supports two channels of DDR4 memory, and that isn’t likely to change with the 3000-series models because each memory channel requires its own dedicated pins for communication. Given the current alignment of the AM4 socket, that means the new chips will likely have a dual-channel memory controller."
+                     },
+                     {
+                        "type":"text",
+                        "text":"Assuming the Ryzen 3000-series processors will have two channels of memory also means that huge increases in core counts, like the rumored doubling to 16 cores, is unlikely. A processors’ execution cores require access to enough memory throughput to ‘feed the beast'’ with data, and doubling the cores without access to more memory channels could present performance challenges. In fact, AMD’s highest-end Threadripper, the second-generation Ryzen Threadripper 2990WX has just that problem because some of the cores lack direct memory access. It’s somewhat acceptable in a workstation part, but starving cores in a mainstream CPU line of direct memory access would be a bad idea, and one we suspect AMD is smart enough to avoid."
+                     }
+                  ]
+               },
+               {
+                  "type":"img",
+                  "src":"https://img.purch.com/img-8128-jpg/o/aHR0cDovL21lZGlhLmJlc3RvZm1pY3JvLmNvbS85L1gvNjU2MTMzL29yaWdpbmFsL0lNR184MTI4LmpwZw=="
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"AMD is leading the way with PCIe 4.0 support for its 7nm EPYC Rome chips, so it wouldn't be surprising to find the standard enabled on the 3000-series processors. However, AMD has confirmed to us that while the new Rome processors are compatible with motherboards designed for the first-gen chips, it will require new motherboards to fully support the PCIe 4.0 standard. That means that while the new 3000-series Ryzen chips may support PCIe 4.0, you'll likely need a new AM4 motherboard designed to accommodate the more stringent PCIe bus signaling requirements. Otherwise the processors will default to PCIe 3.0 signalling rates."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"AM4 Socket 2",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"AMD has promised AM4 CPU socket compatibility until 2020 for all its Ryzen processors. That means you should be able to use any AMD Ryzen processor on any AM4 motherboard, providing AMD’s customers with a solid upgrade path in the future. That stands in stark contrast to Intel’s frequent socket changes that find enthusiasts having to migrate to new boards and chipsets. AMD’s long-lived support for the AM4 socket has earned plenty of cachet with enthusiasts, but it also restricts the company’s options for the new 3000-series processors."
+               },
+               {
+                  "type":"text",
+                  "text":"We also don’t expect a move forward to DDR5 in the near future, as we haven’t seen enough signs in the broader motherboard and memory module ecosystem to indicate there will be a wholesale move to the new standard next year. While its market share is growing, AMD doesn't likely have the pull to drive the move to DDR5. That will likely have to come from Intel."
+               }
+            ],
+            [
+               {
+                  "type":"container",
+                  "contents":[
+                     {
+                        "type":"text",
+                        "text":"Provided that AMD releases the 3000-series Ryzen processors in 2019, the AM4 socket gives us a few hints about the possible configurations. The AM4 socket supports two channels of DDR4 memory, and that isn’t likely to change with the 3000-series models because each memory channel requires its own dedicated pins for communication. Given the current alignment of the AM4 socket, that means the new chips will likely have a dual-channel memory controller."
+                     },
+                     {
+                        "type":"text",
+                        "text":"Assuming the Ryzen 3000-series processors will have two channels of memory also means that huge increases in core counts, like the rumored doubling to 16 cores, is unlikely. A processors’ execution cores require access to enough memory throughput to ‘feed the beast'’ with data, and doubling the cores without access to more memory channels could present performance challenges. In fact, AMD’s highest-end Threadripper, the second-generation Ryzen Threadripper 2990WX has just that problem because some of the cores lack direct memory access. It’s somewhat acceptable in a workstation part, but starving cores in a mainstream CPU line of direct memory access would be a bad idea, and one we suspect AMD is smart enough to avoid."
+                     }
+                  ]
+               },
+               {
+                  "type":"img",
+                  "src":"https://img.purch.com/img-8128-jpg/o/aHR0cDovL21lZGlhLmJlc3RvZm1pY3JvLmNvbS85L1gvNjU2MTMzL29yaWdpbmFsL0lNR184MTI4LmpwZw=="
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"AMD is leading the way with PCIe 4.0 support for its 7nm EPYC Rome chips, so it wouldn't be surprising to find the standard enabled on the 3000-series processors. However, AMD has confirmed to us that while the new Rome processors are compatible with motherboards designed for the first-gen chips, it will require new motherboards to fully support the PCIe 4.0 standard. That means that while the new 3000-series Ryzen chips may support PCIe 4.0, you'll likely need a new AM4 motherboard designed to accommodate the more stringent PCIe bus signaling requirements. Otherwise the processors will default to PCIe 3.0 signalling rates."
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Subheader 3",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               },
+               {
+                  "type":"text",
+                  "text":"2. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"3. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"4. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               },
+               {
+                  "type":"img",
+                  "src":"http://media4.s-nbcnews.com/i/MSNBC/Components/Video/201609/a_ov_Pepe_160928.jpg"
+               }
+            ]
+         ]
+      },
+      {
+         "title":"Subheader 4",
+         "body":[
+            [
+               {
+                  "type":"text",
+                  "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               },
+               {
+                  "type":"text",
+                  "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ],
+            [
+               {
+                  "type":"text",
+                  "text":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+               }
+            ]
+         ]
+      }
+   ]
+}

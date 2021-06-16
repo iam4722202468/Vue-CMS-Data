@@ -1,0 +1,353 @@
+{
+   "pageId":"battery2",
+   "title":"Open Source Thinkpad T420 Battery Part 2",
+   "tags":[
+      "Hardware"
+   ],
+   "links":[
+     {
+       "text":"Part 1",
+       "url":"/#/battery"
+     }
+   ],
+   "masthead": {
+     "image": "battery2/resized/masthead.jpg",
+     "text-color": "#ffffff",
+     "background-color": "#0000ff",
+     "stroke-color": "#000000"
+   },
+   "page":[
+      {
+         "title":"Introduction",
+         "body":[
+            [
+               {
+                 "type":"container-vert",
+                 "contents": [
+                   {
+                      "type":"text",
+                      "text":"This is the second part of my battery adventure, if you haven’t read part one you can find it in the link in the header. Since I made the first writeup, I got the cells, a spot welder and have assembled the battery fully. It’s working fairly well, but with some small problems as seen below."
+                   },
+                   {
+                     "type":"formatted-text",
+                     "text":"<a href=\"https://github.com/iam4722202468/ThinkpadBattery\">https://github.com/iam4722202468/ThinkpadBattery</a>"
+                   }
+                 ]
+               },
+               {
+                  "type":"img",
+                  "src":"battery2/resized/IMG_20201001_174458.jpg"
+               }
+            ]
+         ]
+      },
+      {
+        "title":"Posting on Reddit/Hacker News",
+        "body":[
+          [
+            {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [{
+                  "type":"text",
+                  "text":"I honestly didn’t think I’d finish this project because of how much the cells, spot welder and 3d printer cost, and how much time it would take to complete. Seeing all the people interested in the project and having the github repo get over 100 stars in a few days was really motivational. A bunch of people also commented suggestions like using a battery gas gauge. I had no idea battery gas gauges existed, using one would definitely have been a good idea."
+                }
+              ]
+            },
+            {
+              "type":"img",
+              "width":"2",
+              "src":"battery2/Screenshot_2020-10-02_00-01-11.png"
+            }
+          ]
+        ]
+      },
+      {
+         "title":"Finishing the Battery Model",
+         "body":[
+           [
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"When I made the first writeup, I only really had a working locking mechanism which could slide in using the rails. There were a ton of parts that I hadn’t thought of yet like how the batteries will fit between the laptop and the dock, how the latch will close on its own and where the battery charging board + controller board will go."
+                 },
+                 {
+                   "type":"text",
+                   "text":"To make the latch close, I added a spring on the left side of the case which pushes latch arm, and added stoppers to case body so the spring and lock arm would stay in place. This works decently well, but isn’t a perfect design and sometimes the spring doesn’t push the latch closed."
+                 },
+                 {
+                   "type":"text",
+                   "text":"The fit between the laptop battery bay and dock is extremely tight, I didn’t even think of this spacing when getting the batteries. It turns out there is almost exactly 21mm of space, so the 21700 cells fit but part of the case needs to use extremely thin plastic. A small non-structural part of the case is 0.4mm."
+                 },
+                 {
+                   "type":"text",
+                   "text":"Deciding where to put the controller boards was another hard decision. I ended up making the battery slightly longer than it needs to be, and putting the boards on top of the cells behind the screen. This works well and makes wire routing for everything clean which is important because this is a massive battery bank, and safety is number one priority."
+                 }
+              ]
+             },
+             {
+             "type":"container-vert",
+              "width":"2",
+              "contents": [
+                 {
+                   "type":"img",
+                   "src":"battery2/Screenshot_2020-10-02_00-04-06.png"
+                 },
+                 {
+                   "type":"divider"
+                 },
+                 {
+                   "type":"img",
+                   "src":"battery2/resized/IMG_20200910_125355.jpg"
+                 }
+              ]
+             }
+           ]
+         ]
+      },
+      {
+        "title":"Picking the BMS",
+        "body":[
+           [
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery2/resized/IMG_20200927_163206.jpg"
+             },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"Originally I had planned on using a much smaller bms, but it either wasn’t working properly or I somehow managed to kill it. I measured out the space in the back and decided to get a larger but better bms. This one includes balancing, and the other one might have had balancing too but I didn’t know for sure because the listing on aliexpress  was bad."
+                 }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title":"Testing the Pack",
+        "body":[
+           [
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery2/resized/IMG_20200929_150305.jpg"
+             },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"Before finishing the design and printing the bottom section, I taped the cells to the frame so I could see how the battery performed. The battery seemed to be draining quickly, and would randomly turn off sometimes. After a lot of debugging, I realized that the cells weren’t being charged by the laptop. More on this later. The laptop randomly turning off was the first problem solved. To find the source of the problem, I plugged the battery in to my test laptop and started moving the pack around and touching it in different places to see if it would turn off. Touching the power mosfets on the bms would cause the bms to cut out and stop providing power, which made the laptop turn off. It seems as though the bms is extremely sensitive and stopped when a tiny amount of current went through the short my finger created when touching both sides of the mosfet at the same time. This is very good, because it tells me that the bms is working properly. I put anti-static plastic over the circuits to make sure nothing shorted."
+                 }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title":"Resolving the Charging Problem",
+        "body":[
+           [
+           
+            {
+              "type":"container-vert",
+              "width":"2",
+              "contents": [
+               {
+                "width":"2",
+                "type":"img",
+                "src":"battery2/resized/IMG_20200930_165713.jpg"
+               },
+               {
+                 "type":"divider"
+               },
+               {
+                "width":"2",
+                "type":"img",
+                "src":"battery2/resized/IMG_20201002_134951.jpg"
+               }
+              ]
+             },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"From my testing I knew the T pin did something, but wasn’t sure what it did. All I knew was that connecting it to ground made the battery charge. Turns out, connecting it to ground only makes it charge sometimes. I played around with connecting and disconnecting this pin, and about 1/3 of the times it was reconnected to ground the battery started charging. After taking a look at many packet dumps for connections where it worked and didn’t work, I gave up and decided to add a switch to the side of the case that I can use to connect and disconnect the T pin until the battery starts charging. If anyone knows anything about this let me know because I have absolutely no idea what’s going on. The switch was taken from a 9v battery holder I had, and conveniently the height it matches the high of the section it fits in to perfectly, so adding it in to the design was easy."
+                 }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title":"Printing the Case",
+        "body":[
+           [
+            {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"I decided the case would look really cool if the top and bottom were transparent, so I printed those sections in clear PETG. These clear sections were sanded and cleaned, then clear coated to make them appear more transparent. The rest of the case was printed in black PLA, although I would like to eventually print it in PETG too because of how warm the area around the battery can get. All parts were sanded at the connection points, and small amounts of superglue were used to connect the 9 individual parts together."
+                },
+                {
+                  "type":"img",
+                  "src":"battery2/resized/IMG_20201001_171740.jpg"
+                }
+              ]
+            },
+            {
+              "type":"container-vert",
+              "width":"2",
+              "contents": [
+                {
+                  "type":"img",
+                  "src":"battery2/resized/IMG_20201001_001859.jpg"
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type":"img",
+                  "src":"battery2/resized/IMG_20201001_163914.jpg"
+                }
+              ]
+            }
+          ]
+        ]
+      },
+       {
+        "title":"Using the Battery",
+        "body":[
+           [
+           
+            {
+              "type":"container-vert",
+              "width":"2",
+              "contents": [
+                {
+                  "type":"img",
+                  "src":"battery2/resized/IMG_20201002_134111.jpg"
+                 },
+                 {
+                   "type":"divider"
+                 },
+                 {
+                  "type":"img",
+                  "src":"battery2/resized/IMG_20201002_134129.jpg"
+                 }
+              ]
+            },
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+               {
+                 "type":"text",
+                 "text":"After testing the battery and adjusting the controller so the voltage correctly matched the remaining percentage left, I’m finding that reading the voltage is very accurate. It’s nice because I can see exactly how close the laptop is to turning off instead of the theoretical remaining capacity. The laptop current draw can have large spikes and those spikes can drop the voltage below 10v which is where the motherboard cuts out. Using the voltage and updating the % remaining frequently gives me more information because it accounts for voltage sag. The laptop will only turn off at 0% unlike before where high current draw while under 10% would kill it."
+              },
+                {
+                  "width":"2",
+                  "type":"vid",
+                  "src":"battery2/resized/vid.mp4"
+                 }
+            ]
+}]]
+
+      },
+       {
+        "title":"Battery Life",
+        "body":[
+           [
+            {
+              "type":"container-vert",
+              "width":"1",
+              "contents": [
+              {
+               "type":"text",
+               "text":"Based on some graphs I’ve created, it appears as though the life will be around 4-5 hours of video playback, and around 7 of browsing reddit. I found this cool plugin for Firefox which stops vp9 videos from playing. Youtube will use avc1 instead, which appears to give much better battery life as it’s easier to decode, especially on this older i7-3740qm. I’d have been happy with anything over 3 hours, so these results are very good. The old battery I was using was 80Wh, and this new one is 162Wh so getting over double the time out of it makes sense."
+            }
+              ]
+            },
+            {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                {
+                  "type":"img",
+                  "src":"battery2/Screenshot_2020-10-01_14-28-19.png"
+                },
+                {
+                  "type":"img",
+                  "src":"battery2/Screenshot_2020-09-30_23-26-56.png"
+                },
+                {
+                  "type":"img",
+                  "src":"battery2/Screenshot_2020-10-02_02-08-02.png"
+                }
+              ]
+            }
+           ]
+        ]
+      },
+      {
+         "title":"Conclusion",
+         "body":[
+           [
+             {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                 {
+                   "type":"text",
+                   "text":"I’ve learned a lot more about batteries and 3d modelling. In the end, the real DIY battery is the friends we made along the way."
+                 }
+              ]
+             },
+             {
+               "width":"2",
+               "type":"img",
+               "src":"battery2/resized/IMG_20201002_134159.jpg"
+             }
+           ]
+         ]
+      },
+      {
+        "title":"Next Steps",
+        "body":[
+           [
+            {
+              "type":"container-vert",
+              "width":"3",
+              "contents": [
+                {
+                  "type":"text",
+                  "text":"I’m going to make a controller board with a LTC2944 Battery Gas Gauge. Someone helped me find this IC and it looks perfect for this application. It handles smbus communication too, so if Lenovo’s custom smbus commands can be ignored without any problems, I might be able to use this IC without an attiny which would be nice. When I get more time I’ll design a new pcb with this and order a few to do testing. School is significantly more work than expected, so I won’t have time to work on this for a while."
+                }
+              ]
+             }
+           ]
+        ]
+      },
+      {
+        "title": "May 28 2021 Update",
+        "body": [
+            {
+                   "type":"text",
+                   "text":"I've started work on a pcb which uses the BQ3060 battery controller IC. I'm also considering making an arduino library. Currently my software implementation of the smbus protocol is incomplete. A full software implementation on an arduino has many use cases."
+                 }
+        ]
+      }
+   ]
+}
